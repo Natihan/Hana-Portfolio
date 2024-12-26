@@ -2,15 +2,21 @@ import React from "react";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="p-4 border rounded shadow">
+    <div className="border rounded-lg shadow-lg overflow-hidden">
       <img
         src={book.cover}
-        alt={book.title}
-        className="w-full h-40 object-cover mb-2"
+        alt={`${book.title} cover`}
+        className="w-full h-48 object-cover"
       />
-      <h3 className="font-semibold">{book.title}</h3>
-      <p className="text-gray-600">Author(s): {book.authors}</p>
-      <p className="text-gray-600">Publisher: {book.publisher}</p>
+      <div className="p-4">
+        <h3 className="text-lg font-bold">{book.title}</h3>
+        <p className="text-sm text-gray-700">
+          <strong>Author:</strong> {book.authors}
+        </p>
+        <p className="text-sm text-gray-700">
+          <strong>Publisher:</strong> {book.publisher}
+        </p>
+      </div>
     </div>
   );
 };

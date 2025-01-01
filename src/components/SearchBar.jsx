@@ -3,28 +3,26 @@ import React, { useState } from "react";
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
 
-  const handleSearch = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
     if (query.trim() !== "") {
-      onSearch(query.trim());
+      onSearch(query.trim()); // Call the onSearch function passed via props
     }
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <form onSubmit={handleSubmit} className="flex mb-4">
       <input
         type="text"
-        placeholder="Search for books..."
-        className="border px-4 py-2 rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search for books by title, author, or keyword"
+        className="p-2 w-full border rounded"
       />
-      <button
-        onClick={handleSearch}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
+      <button type="submit" className="ml-2 p-2 bg-blue-500 text-white rounded">
         Search
       </button>
-    </div>
+    </form>
   );
 };
 

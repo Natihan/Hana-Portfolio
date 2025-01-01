@@ -1,22 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="border rounded-lg shadow-lg overflow-hidden">
+    <div className="border p-4 rounded shadow-md">
       <img
         src={book.cover}
-        alt={`${book.title} cover`}
-        className="w-full h-48 object-cover"
+        alt={book.title}
+        className="w-full h-64 object-cover mb-4"
       />
-      <div className="p-4">
-        <h3 className="text-lg font-bold">{book.title}</h3>
-        <p className="text-sm text-gray-700">
-          <strong>Author:</strong> {book.authors}
-        </p>
-        <p className="text-sm text-gray-700">
-          <strong>Publisher:</strong> {book.publisher}
-        </p>
-      </div>
+      <h3 className="font-semibold text-lg">{book.title}</h3>
+      <p><strong>Author:</strong> {book.authors}</p>
+      <p><strong>Publisher:</strong> {book.publisher}</p>
+      <Link to={`/book/${book.id}`} className="text-blue-500">
+        View Details
+      </Link>
     </div>
   );
 };

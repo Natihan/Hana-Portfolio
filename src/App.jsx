@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
-import BookList from "./components/BookList";
+import BookList from "./components/BookList";  // Import BookList
 import BookDetails from "./components/BookDetails";
 import "./App.css";
 
@@ -9,10 +9,15 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [noResults, setNoResults] = useState(false);
 
   const fetchBooks = async (query) => {
     setLoading(true);
     setError("");
+    setNoResults(false); 
+
+    if (!query) return; 
+
     try {
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${query}`
@@ -27,6 +32,11 @@ const App = () => {
         authors: book.author_name ? book.author_name.join(", ") : "Unknown",
         publisher: book.publisher ? book.publisher[0] : "Unknown",
       }));
+
+      if (bookResults.length === 0) {
+        setNoResults(true); 
+      }
+
       setBooks(bookResults);
     } catch (err) {
       setError("Failed to fetch books. Please try again.");
@@ -39,7 +49,6 @@ const App = () => {
     <Router>
       <div className="App">
         <Routes>
-          {/* Route for displaying the book list */}
           <Route
             path="/"
             element={
@@ -48,11 +57,11 @@ const App = () => {
                 <SearchBar onSearch={fetchBooks} />
                 {loading && <p>Loading...</p>}
                 {error && <p className="text-red-500">{error}</p>}
-                <BookList books={books} />
+                {noResults && <p>No books found matching your query.</p>}
+                <BookList books={books} />  {/* Use BookList here to display books */}
               </div>
             }
           />
-          {/* Route for displaying book details */}
           <Route path="/book/:id" element={<BookDetails />} />
         </Routes>
       </div>

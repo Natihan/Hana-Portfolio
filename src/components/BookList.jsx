@@ -1,19 +1,25 @@
 import React from "react";
-import BookCard from "./BookCard";  // Import BookCard
+import { Link } from "react-router-dom";
 
-const BookList = ({ books }) => {
-  if (!books || books.length === 0) {
-    return <p className="text-gray-500">No books available. Try searching for something else!</p>;
-  }
-
+const BookCard = ({ book }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-  {books.map((book) => (
-    <BookCard key={book.id} book={book} />
-  ))}
-</div>
-
+    <div className="p-4 border rounded shadow hover:shadow-lg transition">
+      <img
+        src={book.cover}
+        alt={book.title}
+        className="w-full max-w-sm mx-auto rounded"
+      />
+      <h3 className="font-bold text-lg">{book.title}</h3>
+      <p className="text-gray-600">By {book.authors}</p>
+      <p className="text-gray-600">Published by {book.publisher}</p>
+      <Link
+        to={`/book/${book.id}`}
+        className="text-blue-500 hover:underline mt-2 block"
+      >
+        View Details
+      </Link>
+    </div>
   );
 };
 
-export default BookList;
+export default BookCard;

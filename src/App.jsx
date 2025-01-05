@@ -11,7 +11,7 @@ const App = () => {
   const [error, setError] = useState("");
   const [noResults, setNoResults] = useState(false);
 
-  const fetchBooks = async (query) => {
+  const fetchBooks = async (query, searchType = "title") => {
     setLoading(true);
     setError("");
     setNoResults(false);
@@ -23,7 +23,12 @@ const App = () => {
     }
 
     try {
-      const response = await fetch(`https://openlibrary.org/search.json?q=${query}`);
+      const endpoint =
+        searchType === "author"
+          ? `https://openlibrary.org/search.json?author=${query}`
+          : `https://openlibrary.org/search.json?title=${query}`;
+      const response = await fetch(endpoint);
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -52,6 +57,26 @@ const App = () => {
     }
   };
 
+  const fetchBookDetails = async (isbn) => {
+    try {
+      const response = await fetch(
+        `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch book details");
+      }
+  
+      const data = await response.json();
+      const bookKey = `ISBN:${isbn}`;
+      return data[bookKey]; // Return the book details
+    } catch (err) {
+      console.error("Error fetching book details:", err);
+      return null; // Return null if an error occurs
+    }
+  };
+  
+
   return (
     <Router>
       <div className="App">
@@ -60,19 +85,22 @@ const App = () => {
             path="/"
             element={
               <div className="p-6 max-w-4xl mx-auto text-center">
-                <h1 className="text-3xl font-bold mb-4 text-blue-500">Book Library</h1>
+                <h1 className="text-4xl font-extrabold text-blue-500 mb-6">
+                  Book Library
+                </h1>
                 <SearchBar onSearch={fetchBooks} />
 
                 {loading && (
-                  <div className="flex justify-center items-center mt-4">
+                  <div className="flex flex-col justify-center items-center mt-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
+                    <p className="mt-2 text-blue-500">Loading...</p>
                   </div>
                 )}
 
                 {error && (
                   <div className="flex items-center justify-center text-red-500 mt-4">
                     <span className="mr-2">⚠️</span>
-                    <p>Oops! Something went wrong. Check your internet connection or try again later.</p>
+                    <p>{error}</p>
                   </div>
                 )}
 
@@ -95,7 +123,7 @@ const App = () => {
               </div>
             }
           />
-          <Route path="/book/:id" element={<BookDetails />} />
+          <Route path="/book/:id" element={<BookDetails fetchBookDetails={fetchBookDetails} />} />
         </Routes>
       </div>
     </Router>

@@ -51,7 +51,9 @@ const App = () => {
         setBooks(bookResults);
       }
     } catch (err) {
-      setError("Failed to fetch books. Please check your network connection or try again.");
+      setError(
+        "Failed to fetch books. Please check your network connection or try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -62,11 +64,11 @@ const App = () => {
       const response = await fetch(
         `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
       );
-  
+
       if (!response.ok) {
         throw new Error("Failed to fetch book details");
       }
-  
+
       const data = await response.json();
       const bookKey = `ISBN:${isbn}`;
       return data[bookKey]; // Return the book details
@@ -75,56 +77,81 @@ const App = () => {
       return null; // Return null if an error occurs
     }
   };
-  
 
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="p-6 max-w-4xl mx-auto text-center">
-                <h1 className="text-4xl font-extrabold text-blue-500 mb-6">
-                  Book Library
-                </h1>
-                <SearchBar onSearch={fetchBooks} />
+      <div className="App bg-gradient-to-b from-blue-100 via-white to-blue-50 min-h-screen">
+        {/* Header */}
+        <header className="bg-blue-600 text-white py-8 shadow-lg">
+          <h1 className="text-4xl font-bold text-center tracking-wide">
+            📚 Book Library
+          </h1>
+          <p className="text-center mt-3 text-lg font-medium">
+            Discover your next favorite book!
+          </p>
+        </header>
 
-                {loading && (
-                  <div className="flex flex-col justify-center items-center mt-4">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
-                    <p className="mt-2 text-blue-500">Loading...</p>
-                  </div>
-                )}
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-10 space-y-12">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="text-center space-y-12">
+                  {/* Search Bar */}
+                  <SearchBar onSearch={fetchBooks} />
 
-                {error && (
-                  <div className="flex items-center justify-center text-red-500 mt-4">
-                    <span className="mr-2">⚠️</span>
-                    <p>{error}</p>
-                  </div>
-                )}
+                  {/* Loading Spinner */}
+                  {loading && (
+                    <div className="flex flex-col justify-center items-center mt-6">
+                      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-4"></div>
+                      <p className="mt-4 text-blue-500 font-medium text-xl">
+                        Searching for books...
+                      </p>
+                    </div>
+                  )}
 
-                {noResults && (
-                  <div className="flex items-center justify-center text-gray-500 mt-4">
-                    <span className="mr-2">🔍</span>
-                    <p>No books found for your search query. Try a different keyword.</p>
-                  </div>
-                )}
+                  {/* Error Message */}
+                  {error && (
+                    <div className="bg-red-100 text-red-600 px-6 py-4 mt-6 rounded-lg shadow-md inline-block text-lg">
+                      ⚠️ {error}
+                    </div>
+                  )}
 
-                {!loading && !error && books.length === 0 && !noResults && (
-                  <p className="text-gray-500 mt-4">
-                    Start by searching for books using the search bar above.
-                  </p>
-                )}
+                  {/* No Results Message */}
+                  {noResults && (
+                    <div className="bg-gray-100 text-gray-600 px-6 py-4 mt-6 rounded-lg shadow-md inline-block text-lg">
+                      🔍 No books found for your search. Try another keyword.
+                    </div>
+                  )}
 
-                {!loading && !error && !noResults && books.length > 0 && (
-                  <BookList books={books} />
-                )}
-              </div>
-            }
-          />
-          <Route path="/book/:id" element={<BookDetails fetchBookDetails={fetchBookDetails} />} />
-        </Routes>
+                  {/* Default Message */}
+                  {!loading && !error && books.length === 0 && !noResults && (
+                    <p className="text-gray-500 mt-6 text-lg">
+                      Start by searching for books using the search bar above.
+                    </p>
+                  )}
+
+                  {/* Book List */}
+                  {!loading && !error && !noResults && books.length > 0 && (
+                    <BookList books={books} />
+                  )}
+                </div>
+              }
+            />
+            <Route
+              path="/book/:id"
+              element={<BookDetails fetchBookDetails={fetchBookDetails} />}
+            />
+          </Routes>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-blue-600 text-white py-6 text-center">
+          <p className="text-sm font-medium">
+            © 2025 Book Library. Built with ❤️ by [Natnael Yidnekachew].
+          </p>
+        </footer>
       </div>
     </Router>
   );

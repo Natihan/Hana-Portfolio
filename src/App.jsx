@@ -70,13 +70,24 @@ const App = () => {
       }
 
       const data = await response.json();
-      const bookKey = `ISBN:${isbn}`;
-      return data[bookKey]; // Return the book details
-    } catch (err) {
-      console.error("Error fetching book details:", err);
-      return null; // Return null if an error occurs
-    }
-  };
+    const bookKey = `ISBN:${isbn}`;
+    const book = data[bookKey];
+
+      return {
+      title: book.title,
+      authors: book.authors ? book.authors.map((author) => author.name).join(", ") : "Unknown",
+      description: book.description ? book.description.value : "No description available.",
+      publicationDate: book.publish_date || "Unknown",
+      isbn: isbn,
+      numberOfPages: book.number_of_pages || "N/A",
+      subjects: book.subjects ? book.subjects.join(", ") : "Unknown",
+      cover: book.cover ? book.cover.large : "https://via.placeholder.com/150",
+    };
+  } catch (err) {
+    console.error("Error fetching book details:", err);
+    return null;
+  }
+};
 
   return (
     <Router>

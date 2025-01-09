@@ -59,7 +59,17 @@ const BookDetails = () => {
     return <p>No details available for this book.</p>;
   }
 
-  const { title, authors, publishers, publish_date, number_of_pages, cover, description } = bookDetails;
+  const {
+    title,
+    authors,
+    publishers,
+    publish_date,
+    number_of_pages,
+    cover,
+    description,
+    subjects,
+    isbn_13,  // ISBN-13, fallback for ISBN-10
+  } = bookDetails;
 
   return (
     <div className="p-6 max-w-4xl mx-auto text-center">
@@ -79,10 +89,18 @@ const BookDetails = () => {
       <p className="text-gray-700">
         <strong>Pages:</strong> {number_of_pages || "Unknown"}
       </p>
+      <p className="text-gray-700">
+        <strong>ISBN:</strong> {isbn_13 || "Unknown"}
+      </p>
+      {subjects && subjects.length > 0 && (
+        <p className="text-gray-700">
+          <strong>Subjects:</strong> {subjects.join(", ")}
+        </p>
+      )}
       {description && (
         <div className="text-gray-700 mt-4">
           <strong>Description:</strong>
-          <p>{description || "No description available."}</p>
+          <p>{description.value || "No description available."}</p>
         </div>
       )}
     </div>

@@ -10,7 +10,7 @@ const BookCard = ({ book }) => {
   const { cover, title, authors, publisher, id } = book;
 
   return (
-    <Link to={`/book/${id}`} className="block hover:no-underline">
+    <Link to={`/book/${book.id}`} className="block hover:no-underline">
       <div className="p-4 border rounded shadow hover:shadow-lg hover:scale-105 transition transform duration-200">
         <img
           src={cover || "https://via.placeholder.com/150"} // Use placeholder image if cover is missing

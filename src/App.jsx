@@ -40,7 +40,7 @@ const App = () => {
         setBooks([]);
       } else {
         const bookResults = data.docs.map((book) => ({
-          id: book.key,
+          id: book.isbn ? book.isbn[0] : book.key,
           cover: book.cover_i
             ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
             : "https://via.placeholder.com/150",
@@ -58,36 +58,6 @@ const App = () => {
       setLoading(false);
     }
   };
-
-  const fetchBookDetails = async (isbn) => {
-    try {
-      const response = await fetch(
-        `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch book details");
-      }
-
-      const data = await response.json();
-    const bookKey = `ISBN:${isbn}`;
-    const book = data[bookKey];
-
-      return {
-      title: book.title,
-      authors: book.authors ? book.authors.map((author) => author.name).join(", ") : "Unknown",
-      description: book.description ? book.description.value : "No description available.",
-      publicationDate: book.publish_date || "Unknown",
-      isbn: isbn,
-      numberOfPages: book.number_of_pages || "N/A",
-      subjects: book.subjects ? book.subjects.join(", ") : "Unknown",
-      cover: book.cover ? book.cover.large : "https://via.placeholder.com/150",
-    };
-  } catch (err) {
-    console.error("Error fetching book details:", err);
-    return null;
-  }
-};
 
   return (
     <Router>
@@ -150,17 +120,23 @@ const App = () => {
                 </div>
               }
             />
-            <Route
-              path="/book/:id"
-              element={<BookDetails fetchBookDetails={fetchBookDetails} />}
-            />
+            <Route path="/book/:id" element={<BookDetails />} />
           </Routes>
         </main>
 
         {/* Footer */}
         <footer className="bg-blue-600 text-white py-6 text-center">
           <p className="text-sm font-medium">
-            © 2025 Book Library. Built with ❤️ by [Natnael Yidnekachew].
+            © 2025 Book Library. Built with ❤️ by{" "}
+            <a
+              href="https://github.com/Natihan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-blue-300"
+            >
+              Natnael
+            </a>
+            .
           </p>
         </footer>
       </div>

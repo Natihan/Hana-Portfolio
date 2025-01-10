@@ -5,17 +5,28 @@ import BookList from "./components/BookList";
 import BookDetails from "./components/BookDetails";
 import "./App.css";
 
+/**
+ * The main App component which handles the routing, searching for books, 
+ * and rendering the book list or error messages.
+ */
 const App = () => {
+  // States to manage books, loading, errors, and no search results
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [noResults, setNoResults] = useState(false);
 
+  /**
+   * Fetches books based on the query and search type (title or author).
+   * @param {string} query - The search query (either title or author).
+   * @param {string} searchType - The type of search (either "title" or "author").
+   */
   const fetchBooks = async (query, searchType = "title") => {
     setLoading(true);
     setError("");
     setNoResults(false);
 
+    // Check if the query is empty and handle accordingly
     if (!query.trim()) {
       setError("Please enter a valid search query.");
       setLoading(false);
@@ -23,10 +34,13 @@ const App = () => {
     }
 
     try {
+      // Construct the API endpoint based on the search type
       const endpoint =
         searchType === "author"
           ? `https://openlibrary.org/search.json?author=${query}`
           : `https://openlibrary.org/search.json?title=${query}`;
+      
+      // Fetch data from OpenLibrary API
       const response = await fetch(endpoint);
 
       if (!response.ok) {
@@ -35,10 +49,12 @@ const App = () => {
 
       const data = await response.json();
 
+      // Handle case when no books are found
       if (data.docs.length === 0) {
         setNoResults(true);
         setBooks([]);
       } else {
+        // Process book data
         const bookResults = data.docs.map((book) => ({
           id: book.isbn ? book.isbn[0] : book.key,
           cover: book.cover_i
@@ -51,6 +67,7 @@ const App = () => {
         setBooks(bookResults);
       }
     } catch (err) {
+      // Handle errors during the fetch
       setError(
         "Failed to fetch books. Please check your network connection or try again."
       );

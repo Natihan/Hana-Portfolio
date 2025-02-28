@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoreVertical, X } from "lucide-react";
-import Logo from "../assets/logo.JPG"; // Ensure correct path
+import Logo from "../assets/Logo.JPG"; // Ensure correct path
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

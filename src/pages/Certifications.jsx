@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import Cert1 from "../assets/certificates/AlX-Africa-VA.jpg";
-import Cert2 from "../assets/certificates/Data-Analytics.PNG";
+import Cert2 from "../assets/certificates/Data-Analytics.png";
 import Cert3 from "../assets/certificates/MSc.jpg";
 
 const certificates = [

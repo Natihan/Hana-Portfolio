@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Asana from "../assets/tech/asana.png";
-import Monday from "../assets/tech/monday.png";
+import Monday from "../assets/tech/monday.PNG";
 import Slack from "../assets/tech/slack.png";
 import Teams from "../assets/tech/teams.jpg";
 import Trello from "../assets/tech/trello.png";

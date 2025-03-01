@@ -1,15 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Asana from "../assets/tech/asana.PNG";
-import Monday from "../assets/tech/monday.PNG";
-import Slack from "../assets/tech/slack.PNG";
+import Asana from "../assets/tech/asana.png";
+import Monday from "../assets/tech/monday.png";
+import Slack from "../assets/tech/slack.png";
 import Teams from "../assets/tech/teams.jpg";
-import Trello from "../assets/tech/trello.PNG";
-import Google from "../assets/tech/google.PNG";
-import Calendly from "../assets/tech/calendly.PNG";
-import Canva from "../assets/tech/canva.PNG";
-import Zoho from "../assets/tech/zoho.PNG";
-import Zoom from "../assets/tech/zoom.PNG";
+import Trello from "../assets/tech/trello.png";
+import Google from "../assets/tech/google.png";
+import Calendly from "../assets/tech/calendly.png";
+import Canva from "../assets/tech/canva.png";
+import Zoho from "../assets/tech/zoho.png";
+import Zoom from "../assets/tech/zoom.png";
 
 const tools = [
   { name: "Asana", image: Asana },

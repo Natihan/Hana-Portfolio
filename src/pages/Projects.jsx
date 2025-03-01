@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa"; // Close icon
-import VideoCampaignImg from "../assets/VideoCampaign.png";
+import VideoCampaignImg from "../assets/VideoCampaign.PNG";
 import SocialMediaCalenderImg from "../assets/SocialMediaCalender.png";
 import SchedulingMeetingImg from "../assets/SchedulingMeeting.jpg";
 import ProjectManagementImg from "../assets/ProjectManagement.png";

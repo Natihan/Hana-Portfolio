@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa"; // Close icon
-import VideoCampaignImg from "../assets/VideoCampaign.PNG";
-import SocialMediaCalenderImg from "../assets/SocialMediaCalender.PNG";
+import VideoCampaignImg from "../assets/VideoCampaign.png";
+import SocialMediaCalenderImg from "../assets/SocialMediaCalender.png";
 import SchedulingMeetingImg from "../assets/SchedulingMeeting.jpg";
-import ProjectManagementImg from "../assets/ProjectManagement.PNG";
-import CalenderManagmentImg from "../assets/CalenderManagment.PNG";
+import ProjectManagementImg from "../assets/ProjectManagement.png";
+import CalenderManagmentImg from "../assets/CalenderManagment.png";
 
 const projects = [
   {

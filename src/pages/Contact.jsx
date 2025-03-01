@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import EmailIcon from "../assets/email-icon.JPG"; // Adjust path if needed
+import EmailIcon from "../assets/email-icon.jpg"; // Adjust path if needed
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { FaTimes } from "react-icons/fa"; // Close icon
 import VideoCampaignImg from "../assets/VideoCampaign.PNG";
 import SocialMediaCalenderImg from "../assets/SocialMediaCalender.PNG";
 import SchedulingMeetingImg from "../assets/SchedulingMeeting.jpg";
 import ProjectManagementImg from "../assets/ProjectManagement.PNG";
 import CalenderManagmentImg from "../assets/CalenderManagment.PNG";
-import { FaTimes } from "react-icons/fa"; // Close icon
 
 const projects = [
   {
@@ -52,7 +52,7 @@ const Projects = () => {
             <img
               src={project.image}
               alt={project.title}
-              className="w-80 h-56 rounded-lg shadow-lg object-cover cursor-pointer"
+              className="w-80 h-56 rounded-lg shadow-lg object-cover cursor-pointer transition-transform duration-200 hover:scale-105"
               onClick={() => setSelectedImage(project.image)}
             />
             <h3 className="text-xl font-semibold mt-4">{project.title}</h3>
@@ -70,12 +70,19 @@ const Projects = () => {
           exit={{ opacity: 0 }}
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative">
+          <div
+            className="relative bg-white p-4 rounded-lg"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image
+          >
             <FaTimes
-              className="absolute top-4 right-4 text-white text-3xl cursor-pointer"
+              className="absolute top-4 right-4 text-black text-3xl cursor-pointer"
               onClick={() => setSelectedImage(null)}
             />
-            <img src={selectedImage} alt="Full View" className="max-w-[90vw] max-h-[90vh] rounded-lg" />
+            <img
+              src={selectedImage}
+              alt="Full View"
+              className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg"
+            />
           </div>
         </motion.div>
       )}

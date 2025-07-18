@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes } from "react-icons/fa"; // Close icon
-import VideoCampaignImg from "../assets/VideoCampaign.png";
-import SocialMediaCalenderImg from "../assets/SocialMediaCalender.png";
+import VideoCampaignImg from "../assets/VideoCampaign.jpg";
+import SocialMediaCalenderImg from "../assets/SocialMediaCalender.jpg";
 import SchedulingMeetingImg from "../assets/SchedulingMeeting.jpg";
-import ProjectManagementImg from "../assets/ProjectManagement.png";
-import CalenderManagmentImg from "../assets/CalenderManagment.png";
+import ProjectManagementImg from "../assets/ProjectManagement.jpg";
+import CalenderManagmentImg from "../assets/CalenderManagment.jpg";
 
 const projects = [
   {
@@ -45,47 +45,55 @@ const Projects = () => {
 
   return (
     <div className="container mx-auto px-6 py-10">
-      <h2 className="text-3xl font-bold text-center mb-10">My Projects</h2>
+      <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">My Projects</h2>
+
       <div className="grid md:grid-cols-2 gap-10">
         {projects.map((project, index) => (
           <div key={index} className="flex flex-col items-center text-center">
             <img
               src={project.image}
               alt={project.title}
+              loading="lazy"
               className="w-80 h-56 rounded-lg shadow-lg object-cover cursor-pointer transition-transform duration-200 hover:scale-105"
               onClick={() => setSelectedImage(project.image)}
             />
-            <h3 className="text-xl font-semibold mt-4">{project.title}</h3>
+            <h3 className="text-xl font-semibold mt-4 text-gray-900">{project.title}</h3>
             <p className="mt-2 text-gray-600">{project.description}</p>
           </div>
         ))}
       </div>
 
       {/* Full-Screen Image Modal */}
-      {selectedImage && (
-        <motion.div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setSelectedImage(null)}
-        >
-          <div
-            className="relative bg-white p-4 rounded-lg"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
           >
-            <FaTimes
-              className="absolute top-4 right-4 text-black text-3xl cursor-pointer"
-              onClick={() => setSelectedImage(null)}
-            />
-            <img
-              src={selectedImage}
-              alt="Full View"
-              className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg"
-            />
-          </div>
-        </motion.div>
-      )}
+            <motion.div
+              className="relative bg-white p-4 rounded-lg max-w-[90vw] max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+            >
+              <FaTimes
+                className="absolute top-3 right-3 text-black text-2xl cursor-pointer hover:text-red-600"
+                onClick={() => setSelectedImage(null)}
+              />
+              <img
+                src={selectedImage}
+                alt="Project Full View"
+                loading="lazy"
+                className="rounded-lg max-w-full max-h-[80vh] object-contain"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

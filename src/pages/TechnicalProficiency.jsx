@@ -27,17 +27,26 @@ const tools = [
 const TechnicalProficiency = () => {
   return (
     <div className="container mx-auto px-6 lg:px-20 py-16">
-      <h2 className="text-3xl font-bold text-center mb-10">🛠️ Technical Proficiency</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center">
+      <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+        🛠️ Technical Proficiency
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
         {tools.map((tool, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 150 }}
+            className="flex flex-col items-center p-4 bg-white rounded-xl shadow hover:shadow-lg transition-all"
+            whileHover={{ scale: 1.08 }}
+            transition={{ type: "spring", stiffness: 180 }}
           >
-            <img src={tool.image} alt={tool.name} className="w-16 h-16 object-contain" />
-            <p className="mt-2 text-gray-700 font-semibold">{tool.name}</p>
+            <img
+              src={tool.image}
+              alt={tool.name}
+              className="w-20 h-20 object-contain"
+              loading="lazy"
+            />
+            <p className="mt-3 text-gray-700 font-semibold text-sm text-center">
+              {tool.name}
+            </p>
           </motion.div>
         ))}
       </div>

@@ -1,50 +1,39 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import "./App.css";
+// src/App.jsx
+import { useState } from "react";
+import SearchBar from "./components/SearchBar";
+import MovieList from "./components/MovieList";
 
-// Lazy-loaded pages
-const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
-const Projects = lazy(() => import("./pages/Projects"));
-const Services = lazy(() => import("./pages/Services"));
-const Certifications = lazy(() => import("./pages/Certifications"));
-const TechnicalProficiency = lazy(() => import("./pages/TechnicalProficiency"));
-const Contact = lazy(() => import("./pages/Contact"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+function App() {
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState("");
 
-// ScrollToTop component
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-};
+  const fetchMovies = async (query) => {
+    try {
+      setError("");
+      const response = await fetch(
+        `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}&s=${query}`
+      );
+      const data = await response.json();
 
-const App = () => {
+      if (data.Response === "True") {
+        setMovies(data.Search);
+      } else {
+        setMovies([]);
+        setError(data.Error);
+      }
+    } catch (err) {
+      setError("Failed to fetch movies. Please try again.");
+    }
+  };
+
   return (
-    <Router>
-      <ScrollToTop />
-      <Navbar />
-      <div className="bg-gradient-to-b from-gray-100 via-white to-gray-50 min-h-screen pt-20">
-        <main className="container mx-auto px-4 pb-10">
-          <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/certifications" element={<Certifications />} />
-              <Route path="/technical-proficiency" element={<TechnicalProficiency />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </main>
-      </div>
-    </Router>
+    <div className="min-h-screen bg-gray-100 text-gray-900 p-4">
+      <h1 className="text-3xl font-bold mb-4 text-center">🎬 Movie Database</h1>
+      <SearchBar onSearch={fetchMovies} />
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      <MovieList movies={movies} />
+    </div>
   );
-};
+}
 
 export default App;

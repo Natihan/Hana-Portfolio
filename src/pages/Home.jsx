@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import profilePic from "../assets/profile.JPG";
+import profilePic from "../assets/profile.jpg";
 import { FaEnvelope, FaLinkedinIn } from "react-icons/fa";
 
 const Home = () => {

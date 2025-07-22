@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import ProfileImage from "../assets/profile-2.JPG"; // Ensure correct path
+import ProfileImage from "../assets/profile-2.jpg"; // Ensure correct path
 
 const About = () => {
     return (
